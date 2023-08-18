@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select';
 import { usePathname, useRouter } from 'next/navigation';
 import { SearchOrders, getTrendingGameList } from '@/app/actions/games.action';
+import { Loader } from 'lucide-react';
 
 interface SelectorProps {
   options: { value: string; label: string }[];
@@ -31,7 +32,6 @@ export default function Selector({ options, placeholder }: SelectorProps) {
     });
 
     startTransition(() => {
-      // router.push('?ordering=' + value);
       router.push(`?ordering=${value}`);
       router.refresh();
       setIsLoading(false);
@@ -40,7 +40,7 @@ export default function Selector({ options, placeholder }: SelectorProps) {
 
   return (
     <div>
-      <Select onValueChange={handleSelect}>
+      <Select onValueChange={handleSelect} defaultValue={options[0].value}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={placeholder || '선택하세요.'} />
         </SelectTrigger>
@@ -57,7 +57,9 @@ export default function Selector({ options, placeholder }: SelectorProps) {
           </SelectGroup>
         </SelectContent>
       </Select>
-      {isLoading && <p>로 딩 중 ..............................</p>}
+
+      {/* TODO: Refactoring */}
+      {isLoading && <Loader className="w-5 h-5 animate-spin" />}
     </div>
   );
 }
