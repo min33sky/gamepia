@@ -10,10 +10,43 @@ import type {
 const BASE_URL = 'https://api.rawg.io/api';
 const API_KEY = process.env.RAWG_API_KEY;
 
-export async function getTrendingGameList(page: number = 1) {
+interface GetTrendingParams {
+  page?: number;
+  pageSize?: number;
+  dates?: string;
+  ordering?:
+    | 'added' // popularity
+    | '-added'
+    | 'created' // date added
+    | '-created'
+    | 'name'
+    | '-name'
+    | 'relevance'
+    | '-relevance'
+    | 'rating'
+    | '-rating'
+    | 'released' // release date
+    | '-released';
+}
+
+export async function getTrendingGameList({
+  page = 1,
+  pageSize = 5,
+  dates,
+  ordering = '-relevance',
+}: GetTrendingParams) {
   try {
+    // create SearchParams
+    const params = new URLSearchParams();
+    params.append('page', String(page));
+    params.append('page_size', String(pageSize));
+    if (dates) params.append('dates', dates);
+    if (ordering) params.append('ordering', ordering);
+
+    // console.log('params', params.toString());
+
     const response = await fetch(
-      `${BASE_URL}/games/lists/main?discover=true&key=${API_KEY}&page=${page}`,
+      `${BASE_URL}/games/lists/main?discover=true&key=${API_KEY}&${params.toString()}`,
     );
     const data = (await response.json()) as FETCH_GAMELIST_RESPONSE;
     return data;

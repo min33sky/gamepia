@@ -17,6 +17,7 @@ export type GAME = {
   slug: string;
   name: string;
   released: string;
+  metacritic: number;
   background_image: string;
   rating: number;
   ratings_count: number;

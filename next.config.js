@@ -6,6 +6,9 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  images: {
+    domains: ['media.rawg.io'],
+  },
 };
 
 module.exports = nextConfig;
