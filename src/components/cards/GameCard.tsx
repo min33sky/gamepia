@@ -23,7 +23,7 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game }: GameCardProps) {
-  console.log('### game : ', game);
+  // console.log('### game : ', game);
 
   return (
     <Card>
@@ -32,12 +32,15 @@ export default function GameCard({ game }: GameCardProps) {
         <CardDescription>{game.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Image
-          src={game.background_image}
-          alt={game.name}
-          width={500}
-          height={500}
-        />
+        {game.background_image && (
+          <Image
+            src={game.background_image}
+            alt={game.name}
+            width={200}
+            height={200}
+            priority
+          />
+        )}
 
         {/* 메타크리틱 점수 */}
         {game.metacritic && (

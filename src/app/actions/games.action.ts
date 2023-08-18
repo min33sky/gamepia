@@ -61,6 +61,12 @@ export async function getTrendingGameList({
       revalidatePath(path);
     }
 
+    console.log('게임 목록: ', data.results.length);
+
+    if (!data.results) {
+      return false;
+    }
+
     return data;
   } catch (error) {
     throw new Error(`getGameList Error: ${error}`);

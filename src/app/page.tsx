@@ -16,7 +16,7 @@ interface HomeProps {
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  console.log('### searchParams : ', searchParams);
+  // console.log('### searchParams : ', searchParams);
 
   const ordering = (searchParams.ordering || '-relevance') as SearchOrders;
 
@@ -28,10 +28,18 @@ export default async function Home({ searchParams }: HomeProps) {
 
   // const gameScreenshots = await getGameScreenshots(28);
   // console.log('### gameScreenshots : ', gameScreenshots);
+  if (!gameList) {
+    return <div>데이터가 없습니다.</div>;
+  }
 
   return (
     <main>
-      <GameList title="와우" description="설명란" data={gameList} />
+      <GameList
+        title="와우"
+        description="설명란"
+        data={gameList}
+        ordering={ordering}
+      />
     </main>
   );
 }
