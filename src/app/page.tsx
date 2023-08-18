@@ -2,14 +2,29 @@ import { Button } from '@/components/ui/button';
 import {
   getTrendingGameList,
   getGameScreenshots,
+  SearchOrders,
 } from './actions/games.action';
-import GameCard from '@/components/cards/GameCard';
 import GameList from '@/components/GameList';
 
-export default async function Home() {
-  const gameList = await getTrendingGameList({});
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-  console.log('### gameList : ', gameList);
+interface HomeProps {
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  console.log('### searchParams : ', searchParams);
+
+  const ordering = (searchParams.ordering || '-relevance') as SearchOrders;
+
+  const gameList = await getTrendingGameList({
+    ordering,
+  });
+
+  // console.log('### gameList : ', gameList);
 
   // const gameScreenshots = await getGameScreenshots(28);
   // console.log('### gameScreenshots : ', gameScreenshots);
